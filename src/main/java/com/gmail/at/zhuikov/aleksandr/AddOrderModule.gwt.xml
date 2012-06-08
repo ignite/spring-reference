@@ -32,12 +32,12 @@
 <!--   <source path='shared' /> -->
 
   <replace-with
-	  class="com.gmail.at.zhuikov.aleksandr.client.SampleValidatorFactory">
+	  class="com.gmail.at.zhuikov.aleksandr.client.validation.ValidatorFactory">
     <when-type-is class="javax.validation.ValidatorFactory" />
   </replace-with>
   
   <replace-with
-	  class="com.gmail.at.zhuikov.aleksandr.client.ValidationMessageResolver">
+	  class="com.gmail.at.zhuikov.aleksandr.client.validation.ValidationMessageResolver">
     <when-type-is class="com.google.gwt.validation.client.UserValidationMessagesResolver" />
   </replace-with>
   

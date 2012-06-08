@@ -1,6 +1,7 @@
-package com.gmail.at.zhuikov.aleksandr.client;
+package com.gmail.at.zhuikov.aleksandr.client.validation;
 
 
+import com.gmail.at.zhuikov.aleksandr.client.Translations;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.validation.client.AbstractValidationMessageResolver;
