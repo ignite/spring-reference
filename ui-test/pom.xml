@@ -282,16 +282,14 @@
 			<version>2.2</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>spring-reference-app</artifactId>
+			<version>${project.version}</version>
+			<type>war</type>
+		</dependency>
 	</dependencies>
 	<build>
-		<testResources>
-			<testResource>
-				<directory>src/test/resources</directory>
-			</testResource>
-			<testResource>
-				<directory>src/main/webapp/WEB-INF/spring</directory>
-			</testResource>
-		</testResources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -331,6 +329,41 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+<!-- 			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+				<version>6.1.26</version>
+				<configuration>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<stopPort>8005</stopPort>
+					<stopKey>STOP</stopKey>
+					<webApp>${project.build.directory}/spring-reference-app.war</webApp>
+				</configuration>
+			</plugin> -->
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<configuration>
+					<!-- Container configuration -->
+					<container>
+						<containerId>jetty7x</containerId>
+						<type>embedded</type>
+					</container>
+					<!-- Configuration to use with the container or the deployer -->
+					<configuration>
+						<deployables>
+							<deployable>
+								<groupId>${project.groupId}</groupId>
+								<artifactId>spring-reference-app</artifactId>
+								<type>war</type>
+ 								<properties>
+									<context>spring-reference-app</context>
+								</properties>
+							</deployable>
+						</deployables>
+					</configuration>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
@@ -357,11 +390,32 @@
 					</systemPropertyVariables>
 				</configuration>
 			</plugin>
-			<plugin>
+<!-- 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>2.3.1</version>
-			</plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-cli</id>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>spring-reference-app</artifactId>
+									<version>${project.version}</version>
+									<type>war</type>
+									<overWrite>true</overWrite>
+									<destFileName>spring-reference-app.war</destFileName>
+								</artifactItem>
+							</artifactItems>
+							<outputDirectory>
+								${project.build.directory}
+							</outputDirectory>
+							<overWriteReleases>true</overWriteReleases>
+							<overWriteSnapshots>true</overWriteSnapshots>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin> -->
 		</plugins>
 	</build>
 	<repositories>
@@ -383,9 +437,38 @@
 	        <url>http://maven.jenkins-ci.org:8081/content/repositories/releases/</url>
         </repository>
 	</repositories>
-	<scm>
-		<connection>scm:git:git@github.com:ignite/spring-reference.git</connection>
-		<url>scm:git:git@github.com:ignite/spring-reference.git</url>
-		<developerConnection>scm:git:git@github.com:ignite/spring-reference.git</developerConnection>
-	</scm>
+	<profiles>
+		<profile>
+			<id>local</id>
+			<activation>
+				<property>
+					<name>!env.JENKINS_URL</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.cargo</groupId>
+						<artifactId>cargo-maven2-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>start-container</id>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>start</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>stop-container</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>stop</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
