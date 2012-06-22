@@ -499,4 +499,16 @@
 			</build>
 		</profile>
 	</profiles>
+	<distributionManagement>
+		<repository>
+			<id>cloudbees-release-repo</id>
+			<name>CloudBees repo</name>
+			<url>dav:https://reference.forge.cloudbees.com/snapshot</url>
+		</repository>
+		<snapshotRepository>
+			<id>cloudbees-snapshot-repo</id>
+			<name>CloudBees repo</name>
+			<url>dav:https://reference.forge.cloudbees.com/release</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
