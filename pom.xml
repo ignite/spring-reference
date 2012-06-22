@@ -510,12 +510,12 @@
 		<repository>
 			<id>reference-cloudbees-release-repo</id>
 			<name>CloudBees repo</name>
-			<url>dav:https://reference.forge.cloudbees.com/snapshot</url>
+			<url>dav:https://repository-reference.forge.cloudbees.com/snapshot</url>
 		</repository>
 		<snapshotRepository>
 			<id>snapshot-cloudbees-release-repo</id>
 			<name>CloudBees repo</name>
-			<url>dav:https://reference.forge.cloudbees.com/release</url>
+			<url>dav:https://repository-reference.forge.cloudbees.com/release</url>
 		</snapshotRepository>
 	</distributionManagement>
 </project>
