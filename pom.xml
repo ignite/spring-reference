@@ -436,6 +436,13 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-webdav-jackrabbit</artifactId>
+				<version>2.2</version>
+			</extension>
+		</extensions>
 	</build>
 	<repositories>
 		<repository>
@@ -501,12 +508,12 @@
 	</profiles>
 	<distributionManagement>
 		<repository>
-			<id>cloudbees-release-repo</id>
+			<id>reference-cloudbees-release-repo</id>
 			<name>CloudBees repo</name>
 			<url>dav:https://reference.forge.cloudbees.com/snapshot</url>
 		</repository>
 		<snapshotRepository>
-			<id>cloudbees-snapshot-repo</id>
+			<id>snapshot-cloudbees-release-repo</id>
 			<name>CloudBees repo</name>
 			<url>dav:https://reference.forge.cloudbees.com/release</url>
 		</snapshotRepository>
