@@ -7,16 +7,22 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.TestName;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.saucelabs.selenium.client.factory.SeleniumFactory;
 
 public abstract class AbstractWebDriverTest {
 
+	private static final Logger LOG = LoggerFactory.getLogger(AbstractWebDriverTest.class);
+	
 	protected WebDriver driver;
 	@Rule public TestName name = new TestName();
 	
 	protected WebDriver createDriver() {
 		
+		LOG.info("Creating WebDriver");
+
 		String seleniumDriverUri = System.getenv("SELENIUM_DRIVER");
 
 		if (hasText(seleniumDriverUri)) {
@@ -25,6 +31,9 @@ public abstract class AbstractWebDriverTest {
 			seleniumDriverUri += "&access-key=" + System.getenv("SAUCE_ONDEMAND_ACCESS_KEY");
 			System.setProperty("SELENIUM_DRIVER", seleniumDriverUri);
 		}
+		
+		LOG.info("env SELENIUM_DRIVER=" + seleniumDriverUri);
+		LOG.info("sys SELENIUM_DRIVER=" + seleniumDriverUri);
 		
 		return SeleniumFactory.createWebDriver();
 	}
