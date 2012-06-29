@@ -32,8 +32,8 @@ public abstract class AbstractWebDriverTest {
 			System.setProperty("SELENIUM_DRIVER", seleniumDriverUri);
 		}
 		
-		LOG.info("env SELENIUM_DRIVER=" + seleniumDriverUri);
-		LOG.info("sys SELENIUM_DRIVER=" + seleniumDriverUri);
+		LOG.info("env SELENIUM_DRIVER=" + System.getenv("SELENIUM_DRIVER"));
+		LOG.info("sys SELENIUM_DRIVER=" + System.getProperty("SELENIUM_DRIVER"));
 		
 		return SeleniumFactory.createWebDriver();
 	}
