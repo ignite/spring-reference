@@ -521,13 +521,13 @@
 	<distributionManagement>
 		<repository>
 			<id>reference-cloudbees-release-repo</id>
-			<name>CloudBees repo</name>
-			<url>dav:https://repository-reference.forge.cloudbees.com/snapshot</url>
+			<name>CloudBees release repo</name>
+			<url>dav:https://repository-reference.forge.cloudbees.com/release</url>
 		</repository>
 		<snapshotRepository>
-			<id>snapshot-cloudbees-release-repo</id>
-			<name>CloudBees repo</name>
-			<url>dav:https://repository-reference.forge.cloudbees.com/release</url>
+			<id>reference-cloudbees-snapshot-repo</id>
+			<name>CloudBees snapshot repo</name>
+			<url>dav:https://repository-reference.forge.cloudbees.com/snapshot</url>
 		</snapshotRepository>
 	</distributionManagement>
 </project>
