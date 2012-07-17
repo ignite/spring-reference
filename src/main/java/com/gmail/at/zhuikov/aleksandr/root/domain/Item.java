@@ -18,6 +18,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.core.style.ToStringCreator;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 
 @Entity
@@ -27,10 +28,11 @@ public class Item {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private String id;
 
 	@ManyToOne
 	@XmlTransient
+	@DBRef
 	private Order order;
 
 	private String product;
@@ -73,7 +75,7 @@ public class Item {
 		this.quantity = quantity;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 

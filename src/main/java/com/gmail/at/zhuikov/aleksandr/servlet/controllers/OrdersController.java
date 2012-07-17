@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gmail.at.zhuikov.aleksandr.root.domain.Order;
-import com.gmail.at.zhuikov.aleksandr.root.repository.OrderRepository;
+import com.gmail.at.zhuikov.aleksandr.root.repository.mongo.OrderRepository;
 
 
 @Controller

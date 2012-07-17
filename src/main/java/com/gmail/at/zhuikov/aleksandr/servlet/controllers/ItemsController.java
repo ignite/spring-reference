@@ -20,7 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.gmail.at.zhuikov.aleksandr.root.domain.Item;
 import com.gmail.at.zhuikov.aleksandr.root.domain.Order;
-import com.gmail.at.zhuikov.aleksandr.root.repository.OrderRepository;
+import com.gmail.at.zhuikov.aleksandr.root.repository.mongo.ItemRepository;
+import com.gmail.at.zhuikov.aleksandr.root.repository.mongo.OrderRepository;
 
 @Controller
 @RequestMapping("/orders/{orderId}/items")
@@ -30,6 +31,9 @@ public class ItemsController {
 	
 	@Inject
 	private OrderRepository orderRepository;
+	
+	@Inject
+	private ItemRepository itemRepository;
 	
 	@ExceptionHandler(BindException.class)
 	public ModelAndView itemHasErrors(BindException e) {
@@ -46,7 +50,7 @@ public class ItemsController {
 	}
 	
 	@ModelAttribute
-	public Item prepareItem(@PathVariable Long orderId) throws OrderNotFoundException {
+	public Item prepareItem(@PathVariable String orderId) throws OrderNotFoundException {
 		Order order = orderRepository.findOne(orderId);
 		
 		if (order == null) {
@@ -64,6 +68,7 @@ public class ItemsController {
 	@RequestMapping(method = POST)
 	public String create(@Valid Item item) {
 		LOG.info("Adding item " + item);
+		itemRepository.save(item);
 		orderRepository.save(item.getOrder());
 		return "redirect:/orders/" + item.getOrder().getId();
 	}

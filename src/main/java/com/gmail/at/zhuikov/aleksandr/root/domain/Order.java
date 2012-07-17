@@ -6,6 +6,7 @@ import static javax.xml.bind.annotation.XmlAccessType.FIELD;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -29,6 +30,8 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.core.style.ToStringCreator;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 
 @Entity
@@ -41,7 +44,7 @@ public class Order {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	protected Long id;
+	protected String id;
 	
 	protected String customer;
 	
@@ -51,7 +54,8 @@ public class Order {
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ORDER_ID")
-	private Collection<Item> items = new LinkedHashSet<Item>();
+	@DBRef
+	private Set<Item> items = new LinkedHashSet<Item>();
 
 	protected Order() {
 	}
@@ -69,15 +73,15 @@ public class Order {
 
 	@Valid
 	@UniqueProductInOrder(groups = ComplexValidation.class)
-	public Collection<Item> getItems() {
+	public Set<Item> getItems() {
 		return items;
 	}
 
-	public void setItems(Collection<Item> items) {
+	public void setItems(Set<Item> items) {
 		this.items = items;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 	

@@ -28,7 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.gmail.at.zhuikov.aleksandr.root.domain.Order;
-import com.gmail.at.zhuikov.aleksandr.root.repository.OrderRepository;
+import com.gmail.at.zhuikov.aleksandr.root.repository.mongo.OrderRepository;
 
 
 @Controller

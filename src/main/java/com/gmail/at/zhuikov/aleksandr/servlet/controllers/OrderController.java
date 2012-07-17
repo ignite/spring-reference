@@ -20,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.ModelAndViewDefiningException;
 
 import com.gmail.at.zhuikov.aleksandr.root.domain.Order;
-import com.gmail.at.zhuikov.aleksandr.root.repository.OrderRepository;
+import com.gmail.at.zhuikov.aleksandr.root.repository.mongo.OrderRepository;
 
 
 @Controller
@@ -38,7 +38,7 @@ public class OrderController {
 	}
 	
 	@ModelAttribute
-	public Order prepareOrder(@PathVariable Long id) throws OrderNotFoundException {
+	public Order prepareOrder(@PathVariable String id) throws OrderNotFoundException {
 		Order order = orderRepository.findOne(id);
 		
 		if (order == null) {
