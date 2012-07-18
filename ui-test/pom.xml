@@ -292,6 +292,11 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>com.cloudbees</groupId>
+				<artifactId>bees-maven-plugin</artifactId>
+				<version>1.3.2</version>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
@@ -437,6 +442,18 @@
 	        <url>http://maven.jenkins-ci.org:8081/content/repositories/releases/</url>
         </repository>
 	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>cloudbees-public-release</id>
+			<url>http://repository-cloudbees.forge.cloudbees.com/public-release</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 	<profiles>
 		<profile>
 			<id>local</id>
@@ -463,6 +480,30 @@
 								<phase>post-integration-test</phase>
 								<goals>
 									<goal>stop</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>cloudbees</id>
+			<activation>
+				<property>
+					<name>env.JENKINS_URL</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.cloudbees</groupId>
+						<artifactId>bees-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>deploy</goal>
 								</goals>
 							</execution>
 						</executions>
