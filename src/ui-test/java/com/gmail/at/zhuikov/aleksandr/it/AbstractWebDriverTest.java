@@ -4,8 +4,6 @@ import static org.springframework.util.StringUtils.hasText;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
-import org.junit.rules.TestName;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +15,6 @@ public abstract class AbstractWebDriverTest {
 	private static final Logger LOG = LoggerFactory.getLogger(AbstractWebDriverTest.class);
 	
 	protected WebDriver driver;
-	@Rule public TestName name = new TestName();
 	
 	protected WebDriver createDriver() {
 		
@@ -26,7 +23,6 @@ public abstract class AbstractWebDriverTest {
 		String seleniumDriverUri = System.getenv("SELENIUM_DRIVER");
 
 		if (hasText(seleniumDriverUri)) {
-			seleniumDriverUri += "&job-name=" + getClass().getName() + "." + name.getMethodName();
 			seleniumDriverUri += "&username=" + System.getenv("SAUCE_ONDEMAND_USERNAME");
 			seleniumDriverUri += "&access-key=" + System.getenv("SAUCE_ONDEMAND_ACCESS_KEY");
 			System.setProperty("SELENIUM_DRIVER", seleniumDriverUri);
