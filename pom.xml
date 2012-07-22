@@ -368,6 +368,9 @@
 						<goals>
 							<goal>integration-test</goal>
 						</goals>
+						<configuration>
+							<exclude>**/*RestIT.java</exclude>
+						</configuration>
 					</execution>
 					<execution>
 						<id>verify</id>
