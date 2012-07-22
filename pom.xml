@@ -364,12 +364,25 @@
 				<version>2.12</version>
 				<executions>
 					<execution>
-						<id>integration-test</id>
+						<id>integration-test-rest</id>
 						<goals>
 							<goal>integration-test</goal>
 						</goals>
 						<configuration>
-							<exclude>**/*RestIT.java</exclude>
+							<includes>
+								<include>**/*RestIT.*</include>
+							</includes>
+						</configuration>
+					</execution>
+					<execution>
+						<id>integration-test-selenium</id>
+						<goals>
+							<goal>integration-test</goal>
+						</goals>
+						<configuration>
+							<excludes>
+								<exclude>**/*RestIT.*</exclude>
+							</excludes>
 						</configuration>
 					</execution>
 					<execution>
