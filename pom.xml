@@ -364,28 +364,6 @@
 				<version>2.12</version>
 				<executions>
 					<execution>
-						<id>integration-test-rest</id>
-						<goals>
-							<goal>integration-test</goal>
-						</goals>
-						<configuration>
-							<includes>
-								<include>**/*RestIT.*</include>
-							</includes>
-						</configuration>
-					</execution>
-					<execution>
-						<id>integration-test-selenium</id>
-						<goals>
-							<goal>integration-test</goal>
-						</goals>
-						<configuration>
-							<excludes>
-								<exclude>**/*RestIT.*</exclude>
-							</excludes>
-						</configuration>
-					</execution>
-					<execution>
 						<id>verify</id>
 						<goals>
 							<goal>verify</goal>
@@ -527,6 +505,64 @@
 								<goals>
 									<goal>stop</goal>
 								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>rest-test</id>
+ 			<activation>
+				<property>
+					<name>!env.JENKINS_URL</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>integration-test-rest</id>
+								<goals>
+									<goal>integration-test</goal>
+								</goals>
+								<configuration>
+									<includes>
+										<include>**/*RestIT.*</include>
+									</includes>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>selenium</id>
+ 			<activation>
+				<property>
+					<name>!env.JENKINS_URL</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>integration-test-selenium</id>
+								<goals>
+									<goal>integration-test</goal>
+								</goals>
+								<configuration>
+									<excludes>
+										<exclude>**/*RestIT.*</exclude>
+									</excludes>
+								</configuration>
 							</execution>
 						</executions>
 					</plugin>
