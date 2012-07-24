@@ -1,3 +1,5 @@
+version = '0.2-SNAPSHOT'
+
 apply plugin: 'war'
 apply plugin: 'jetty'
 
