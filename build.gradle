@@ -1,9 +1,10 @@
-version = '0.2-SNAPSHOT'
-
 apply plugin: 'war'
 apply plugin: 'jetty'
 apply plugin: 'eclipse'
 apply plugin: 'eclipse-wtp'
+
+version = '0.2-SNAPSHOT'
+sourceCompatibility = '1.6'
 
 sourceSets {
 	main {
