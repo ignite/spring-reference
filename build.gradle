@@ -5,6 +5,9 @@ apply plugin: 'eclipse-wtp'
 
 version = '0.2-SNAPSHOT'
 sourceCompatibility = '1.6'
+stopKey = 'gfshrgerthjrwh'
+stopPort = 9451
+httpPort = 8080
 
 sourceSets {
 	main {
@@ -14,6 +17,14 @@ sourceSets {
 		resources {
 			srcDirs = ['src/test/resources', 'src/main/webapp/WEB-INF/spring']
 		}
+	}
+	restTest {
+		java.srcDir file('src/rest-test/java')
+		output.classesDir = "build/classes/rest-test"
+	}
+	uiTest {
+		java.srcDir file('src/ui-test/java')
+		output.classesDir = "build/classes/ui-test"
 	}
 }
 
@@ -82,10 +93,59 @@ dependencies {
     testCompile(
         'org.springframework:spring-test:3.1.1.RELEASE',
         'junit:junit:4.10',
-        'org.seleniumhq.selenium:selenium-java:2.21.0',
+        'org.seleniumhq.selenium:selenium-java:2.25.0',
+		'org.seleniumhq.selenium:selenium-server:2.25.0',
         'org.mockito:mockito-core:1.9.0-rc1',
         'com.saucelabs.selenium:selenium-client-factory:2.5',
         'com.saucelabs.selenium:sauce-ondemand-driver:2.5',
         'com.saucelabs.selenium:selenium-embedded-rc-driver:2.5'
     )
+	
+	restTestCompile sourceSets.main.output
+	restTestCompile configurations.testCompile
+	restTestCompile sourceSets.test.output
+	restTestRuntime configurations.testRuntime
+	
+	uiTestCompile sourceSets.main.output
+	uiTestCompile configurations.testCompile
+	uiTestCompile sourceSets.test.output
+	uiTestRuntime configurations.testRuntime
 }
+
+task restTest(type: Test, dependsOn: test) {
+	testClassesDir = sourceSets.restTest.output.classesDir
+	classpath = sourceSets.restTest.runtimeClasspath
+	testReportDir = file("build/reports/rest-test")
+	testResultsDir = file("build/rest-test-results")
+	systemProperties 'DEFAULT_SELENIUM_STARTING_URL': 'http://localhost:8080/spring-reference'
+}
+
+restTest.doFirst() {
+	jettyRunWar.daemon = true
+	tasks.jettyRunWar.execute()
+}
+
+restTest.doLast() {
+	tasks.jettyStop.execute()
+}
+
+task uiTest(type: Test, dependsOn: restTest) {
+	testClassesDir = sourceSets.uiTest.output.classesDir
+	classpath = sourceSets.uiTest.runtimeClasspath
+	testReportDir = file("build/reports/ui-test")
+	testResultsDir = file("build/ui-test-results")
+	maxHeapSize = '128m'
+	systemProperties 'DEFAULT_SELENIUM_STARTING_URL': 'http://localhost:8080/spring-reference'
+	systemProperties 'DEFAULT_SELENIUM_DRIVER': 'embedded-rc:'
+}
+
+uiTest.doFirst() {
+	jettyRunWar.daemon = true
+	tasks.jettyRunWar.execute()
+}
+
+uiTest.doLast() {
+	tasks.jettyStop.execute()
+}
+
+check.dependsOn uiTest
