@@ -3,7 +3,6 @@ apply plugin: 'jetty'
 apply plugin: 'eclipse'
 apply plugin: 'eclipse-wtp'
 
-projectName = "spring-reference"
 version = '0.2-SNAPSHOT'
 sourceCompatibility = '1.6'
 stopKey = 'gfshrgerthjrwh'
