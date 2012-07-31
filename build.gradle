@@ -2,8 +2,8 @@ apply plugin: 'war'
 apply plugin: 'jetty'
 apply plugin: 'eclipse'
 apply plugin: 'eclipse-wtp'
+apply from: "https://launchpad.net/gradle-release/trunk/latest/+download/apply.groovy"
 
-version = '0.2-SNAPSHOT'
 sourceCompatibility = '1.6'
 stopKey = 'gfshrgerthjrwh'
 stopPort = 9451
@@ -134,7 +134,7 @@ task uiTest(type: Test, dependsOn: restTest) {
 	classpath = sourceSets.uiTest.runtimeClasspath
 	testReportDir = file("build/reports/ui-test")
 	testResultsDir = file("build/ui-test-results")
-	maxHeapSize = '128m'
+	jvmArgs '-Xms64M', '-Xmx512M', '-XX:MaxPermSize=256m'
 	systemProperties 'DEFAULT_SELENIUM_STARTING_URL': 'http://localhost:8080/spring-reference'
 	systemProperties 'DEFAULT_SELENIUM_DRIVER': 'embedded-rc:'
 }
