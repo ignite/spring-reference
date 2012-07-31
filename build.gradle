@@ -113,7 +113,7 @@ dependencies {
 	uiTestRuntime configurations.testRuntime
 }
 
-task restTest(type: Test, dependsOn: test) {
+task restTest(type: Test, dependsOn: assemble) {
 	testClassesDir = sourceSets.restTest.output.classesDir
 	classpath = sourceSets.restTest.runtimeClasspath
 	testReportDir = file("build/reports/rest-test")
