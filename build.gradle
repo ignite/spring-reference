@@ -3,6 +3,7 @@ apply plugin: 'jetty'
 apply plugin: 'eclipse'
 apply plugin: 'eclipse-wtp'
 apply from: "https://launchpad.net/gradle-release/trunk/latest/+download/apply.groovy"
+apply from: 'https://github.com/valkolovos/gradle_cobertura/raw/master/repo/gradle_cobertura/gradle_cobertura/1.0/coberturainit.gradle'
 
 sourceCompatibility = '1.6'
 stopKey = 'gfshrgerthjrwh'
@@ -149,4 +150,5 @@ uiTest.doLast() {
 	tasks.jettyStop.execute()
 }
 
-check.dependsOn uiTest
+check.dependsOn uiTest, cobertura
+coberturaXml.dependsOn cleanTest //https://github.com/valkolovos/gradle_cobertura/issues/18
