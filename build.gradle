@@ -135,6 +135,7 @@ task uiTest(type: Test, dependsOn: restTest) {
 	testReportDir = file("build/reports/ui-test")
 	testResultsDir = file("build/ui-test-results")
 	jvmArgs '-Xms64M', '-Xmx512M', '-XX:MaxPermSize=256m'
+	maxParallelForks 2
 	systemProperties 'DEFAULT_SELENIUM_STARTING_URL': 'http://localhost:8080/spring-reference'
 	systemProperties 'DEFAULT_SELENIUM_DRIVER': 'embedded-rc:'
 }
