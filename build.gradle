@@ -113,7 +113,11 @@ dependencies {
 	uiTestRuntime configurations.testRuntime
 }
 
-task restTest(type: Test, dependsOn: assemble) {
+jettyRunWar {
+	daemon = true
+}
+
+task restTest(type: Test, dependsOn: jettyRunWar) {
 	testClassesDir = sourceSets.restTest.output.classesDir
 	classpath = sourceSets.restTest.runtimeClasspath
 	testReportDir = file("build/reports/rest-test")
@@ -121,16 +125,7 @@ task restTest(type: Test, dependsOn: assemble) {
 	systemProperties 'DEFAULT_SELENIUM_STARTING_URL': 'http://localhost:8080/spring-reference'
 }
 
-restTest.doFirst() {
-	jettyRunWar.daemon = true
-	tasks.jettyRunWar.execute()
-}
-
-restTest.doLast() {
-	tasks.jettyStop.execute()
-}
-
-task uiTest(type: Test, dependsOn: restTest) {
+task uiTest(type: Test, dependsOn: jettyRunWar) {
 	testClassesDir = sourceSets.uiTest.output.classesDir
 	classpath = sourceSets.uiTest.runtimeClasspath
 	testReportDir = file("build/reports/ui-test")
@@ -141,14 +136,5 @@ task uiTest(type: Test, dependsOn: restTest) {
 	systemProperties 'DEFAULT_SELENIUM_DRIVER': 'embedded-rc:'
 }
 
-uiTest.doFirst() {
-	jettyRunWar.daemon = true
-	tasks.jettyRunWar.execute()
-}
-
-uiTest.doLast() {
-	tasks.jettyStop.execute()
-}
-
-check.dependsOn uiTest, cobertura
+check.dependsOn restTest, uiTest, cobertura
 coberturaXml.dependsOn cleanTest //https://github.com/valkolovos/gradle_cobertura/issues/18
