@@ -2,6 +2,7 @@ apply plugin: 'war'
 apply plugin: 'jetty'
 apply plugin: 'eclipse'
 apply plugin: 'eclipse-wtp'
+apply plugin: 'maven'
 apply from: "https://launchpad.net/gradle-release/trunk/latest/+download/apply.groovy"
 apply from: 'https://github.com/valkolovos/gradle_cobertura/raw/master/repo/gradle_cobertura/gradle_cobertura/1.0/coberturainit.gradle'
 
@@ -42,13 +43,16 @@ repositories {
 	}
 }
 
+artifacts {  archives war }
+
 configurations {
-    all*.exclude group: 'javax.mail', module: 'mail'
-    all*.exclude group: 'javax.jms', module: 'jms'
-    all*.exclude group: 'com.sun.jdmk', module: 'jmxtools'
-    all*.exclude group: 'com.sun.jmx', module: 'jmxri'
+	all*.exclude group: 'javax.mail', module: 'mail'
+	all*.exclude group: 'javax.jms', module: 'jms'
+	all*.exclude group: 'com.sun.jdmk', module: 'jmxtools'
+	all*.exclude group: 'com.sun.jmx', module: 'jmxri'
 	all*.exclude group: 'commons-logging', module: 'commons-logging'
 	all*.exclude group: 'xerces', module: 'xercesImpl'
+	deployerJars
 }
 
 dependencies {
@@ -102,6 +106,11 @@ dependencies {
         'com.saucelabs.selenium:selenium-embedded-rc-driver:2.5'
     )
 	
+	deployerJars(
+		"org.apache.maven.wagon:wagon-webdav-jackrabbit:2.2",
+		"commons-httpclient:commons-httpclient:3.1"
+	)
+	
 	restTestCompile sourceSets.main.output
 	restTestCompile configurations.testCompile
 	restTestCompile sourceSets.test.output
@@ -111,6 +120,18 @@ dependencies {
 	uiTestCompile configurations.testCompile
 	uiTestCompile sourceSets.test.output
 	uiTestRuntime configurations.testRuntime
+}
+
+uploadArchives {
+	repositories.mavenDeployer {
+		configuration = configurations.deployerJars
+		repository(url: "dav:https://repository-reference.forge.cloudbees.com/release") {
+			authentication(userName: "me", password: "myPassword")
+		}
+		snapshotRepository(url: "dav:https://repository-reference.forge.cloudbees.com/snapshot") {
+			authentication(userName: "reference-app", password: "hWsyHpE")
+		}
+	}
 }
 
 jettyRunWar {
