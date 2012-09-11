@@ -1,3 +1,16 @@
+buildscript {
+	repositories {
+		maven { url 'https://repository-gradle-cloudbees-plugin.forge.cloudbees.com/release' }
+		mavenCentral()
+	}
+	dependencies {
+		classpath(
+				'org.gradle:gradle-cloudbees-plugin:1.1.1'
+				)
+	}
+}
+
+apply plugin: 'cloudbees'
 apply plugin: 'war'
 apply plugin: 'jetty'
 apply plugin: 'eclipse'
@@ -10,6 +23,12 @@ sourceCompatibility = '1.6'
 stopKey = 'gfshrgerthjrwh'
 stopPort = 9451
 httpPort = 8080
+
+cloudbees {
+	apiKey = '65728CB63EA87A3F'
+	secret = 'TP7DNSJTILEHJ9QQVMLYZ0AI/FTD7EXFRU2YYQ6TUUG='
+	appId = 'reference/test'
+}
 
 sourceSets {
 	main {
