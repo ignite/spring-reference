@@ -26,6 +26,7 @@ public abstract class AbstractWebDriverTest {
 		String seleniumDriverUri = System.getenv("SELENIUM_DRIVER");
 
 		if (hasText(seleniumDriverUri)) {
+			seleniumDriverUri = seleniumDriverUri.replace("windows 2008", "win7");
 			seleniumDriverUri += "&job-name=" + getClass().getName() + "." + name.getMethodName();
 			seleniumDriverUri += "&username=" + System.getenv("SAUCE_ONDEMAND_USERNAME");
 			seleniumDriverUri += "&access-key=" + System.getenv("SAUCE_ONDEMAND_ACCESS_KEY");
