@@ -1,16 +1,21 @@
+import org.springframework.scheduling.TaskScheduler;
+
 buildscript {
 	repositories {
 		maven { url 'https://repository-gradle-cloudbees-plugin.forge.cloudbees.com/release' }
+		maven { url 'http://repo.springsource.org/libs-milestone' }
 		mavenCentral()
 	}
 	dependencies {
 		classpath(
-				'org.gradle:gradle-cloudbees-plugin:1.1.1'
+				'org.gradle:gradle-cloudbees-plugin:1.1.1',
+				'org.gradle.api.plugins:gradle-cf-plugin:0.2.0'
 				)
 	}
 }
 
 apply plugin: 'cloudbees'
+apply plugin: 'cloudfoundry'
 apply plugin: 'war'
 apply plugin: 'jetty'
 apply plugin: 'eclipse'
@@ -28,6 +33,16 @@ cloudbees {
 	apiKey = '65728CB63EA87A3F'
 	secret = 'TP7DNSJTILEHJ9QQVMLYZ0AI/FTD7EXFRU2YYQ6TUUG='
 	appId = 'reference/test'
+}
+
+cloudfoundry {
+	username = 'reference-app@ignite.ee'
+	password = 'oKqjCaBl'
+	application = 'reference'
+	framework = 'spring'
+	file = war.archivePath
+	uris = ['http://reference.cloudfoundry.com']
+	services = ['dataSource']
 }
 
 sourceSets {
@@ -50,16 +65,10 @@ sourceSets {
 }
 
 repositories {
-
     mavenCentral()
-
-    maven {
-        url "https://id.smartlink.ee/repo/mvnrepo"
-    }
-	
-	maven {
-		url "https://repository-saucelabs.forge.cloudbees.com/release"
-	}
+    maven { url "https://id.smartlink.ee/repo/mvnrepo" }
+	maven { url "https://repository-saucelabs.forge.cloudbees.com/release" }
+	maven { url 'http://maven.springframework.org/milestone' }
 }
 
 artifacts {  archives war }
@@ -106,7 +115,8 @@ dependencies {
     runtime(
         'org.slf4j:jcl-over-slf4j:1.6.1',
         'org.slf4j:slf4j-log4j12:1.6.1',
-        'log4j:log4j:1.2.15'
+        'log4j:log4j:1.2.15',
+		'org.cloudfoundry:cloudfoundry-runtime:0.8.1'
     )
 
     providedCompile(
@@ -175,4 +185,6 @@ task uiTest(type: Test, dependsOn: jettyRunWar) {
 }
 
 check.dependsOn restTest, uiTest, cobertura
+tasks.find { 'cf-push' == it.name }.dependsOn war
+tasks.find { 'cf-update' == it.name }.dependsOn war
 coberturaXml.dependsOn cleanTest //https://github.com/valkolovos/gradle_cobertura/issues/18
