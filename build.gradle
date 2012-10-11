@@ -21,8 +21,9 @@ apply plugin: 'jetty'
 apply plugin: 'eclipse'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'maven'
-apply from: "https://launchpad.net/gradle-release/trunk/latest/+download/apply.groovy"
+apply from: 'https://launchpad.net/gradle-release/trunk/latest/+download/apply.groovy'
 apply from: 'https://github.com/valkolovos/gradle_cobertura/raw/master/repo/gradle_cobertura/gradle_cobertura/1.0/coberturainit.gradle'
+apply from: 'https://raw.github.com/gschmidl/jacoco-gradle/master/jacoco.gradle'
 
 sourceCompatibility = '1.6'
 stopKey = 'gfshrgerthjrwh'
