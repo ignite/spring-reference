@@ -4,12 +4,14 @@ buildscript {
 	repositories {
 		maven { url 'https://repository-gradle-cloudbees-plugin.forge.cloudbees.com/release' }
 		maven { url 'http://repo.springsource.org/libs-milestone' }
+		maven { url 'http://repo.kulya.info/content/groups/public' }
 		mavenCentral()
 	}
 	dependencies {
 		classpath(
 				'org.gradle:gradle-cloudbees-plugin:1.1.1',
-				'org.gradle.api.plugins:gradle-cf-plugin:0.2.0'
+				'org.gradle.api.plugins:gradle-cf-plugin:0.2.0',
+				'org.veil.gradle.plugins:jmeter-gradle-plugin:1.2-2.6-SNAPSHOT'
 				)
 	}
 }
@@ -21,6 +23,7 @@ apply plugin: 'jetty'
 apply plugin: 'eclipse'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'maven'
+apply plugin: 'jmeter'
 apply from: 'https://launchpad.net/gradle-release/trunk/latest/+download/apply.groovy'
 apply from: 'https://github.com/valkolovos/gradle_cobertura/raw/master/repo/gradle_cobertura/gradle_cobertura/1.0/coberturainit.gradle'
 apply from: 'https://raw.github.com/gschmidl/jacoco-gradle/master/jacoco.gradle'
@@ -29,6 +32,10 @@ sourceCompatibility = '1.6'
 stopKey = 'gfshrgerthjrwh'
 stopPort = 9451
 httpPort = 8080
+
+jmeterRun.configure {
+	srcDir = file("src/jmeter")
+}
 
 cloudbees {
 	apiKey = '65728CB63EA87A3F'
