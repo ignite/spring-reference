@@ -24,13 +24,14 @@
 	
 	<context:component-scan base-package="com.gmail.at.zhuikov.aleksandr.servlet"/>
 
-	<!-- TODO: use package scanning instead of defining classes -->
- 	<oxm:jaxb2-marshaller id="marshaller">
-		<oxm:class-to-be-bound name="com.gmail.at.zhuikov.aleksandr.root.domain.xml.XmlFriendlyErrors"/>
-		<oxm:class-to-be-bound name="com.gmail.at.zhuikov.aleksandr.root.domain.xml.XmlFriendlyPage"/>
-		<oxm:class-to-be-bound name="com.gmail.at.zhuikov.aleksandr.root.domain.Order"/>
-	</oxm:jaxb2-marshaller>
-
+    <bean id="marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+        <property name="packagesToScan">
+        	<list>
+        		<value>com.gmail.at.zhuikov.aleksandr.root.domain</value>
+        	</list>
+        </property>
+    </bean>
+	
 	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver"/>
 
 	<bean class="org.springframework.web.servlet.view.XmlViewResolver">
