@@ -500,11 +500,12 @@
 								<id>start-jetty</id>
 								<phase>pre-integration-test</phase>
 								<goals>
-									<goal>run-exploded</goal>
+									<goal>deploy-war</goal>
 								</goals>
 								<configuration>
 									<scanIntervalSeconds>0</scanIntervalSeconds>
 									<daemon>true</daemon>
+									<webApp>${project.build.directory}/${project.artifactId}.war</webApp>
 								</configuration>
 							</execution>
 							<execution>
