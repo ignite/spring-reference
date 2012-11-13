@@ -24,6 +24,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.validation.FieldError;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -41,7 +42,6 @@ import com.gmail.at.zhuikov.aleksandr.rest.xml.MyResponseErrorHandler.MyHttpStat
 import com.gmail.at.zhuikov.aleksandr.root.domain.Item;
 import com.gmail.at.zhuikov.aleksandr.root.domain.Order;
 import com.gmail.at.zhuikov.aleksandr.root.domain.xml.XmlFriendlyPage;
-import com.gmail.at.zhuikov.aleksandr.servlet.MappingJackson2HttpMessageConverter;
 
 public class JsonRestIT extends AbstractRestTest {
 
