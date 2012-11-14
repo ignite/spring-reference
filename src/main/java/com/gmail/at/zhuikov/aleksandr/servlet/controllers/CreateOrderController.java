@@ -59,7 +59,7 @@ public class CreateOrderController {
 		saveOrder(order);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(getOrderLocation(request, order));
-		return new ResponseEntity<Void>(headers, CREATED);
+		return new ResponseEntity<>(headers, CREATED);
 	}
 
 	@RequestMapping(value = "/orders", method = POST)

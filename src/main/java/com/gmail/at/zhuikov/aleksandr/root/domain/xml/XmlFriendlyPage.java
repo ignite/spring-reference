@@ -22,11 +22,11 @@ import org.springframework.data.domain.Sort.Order;
 @XmlAccessorType(FIELD)
 public class XmlFriendlyPage <T> implements Page<T> {
 
-	private List<T> content = new ArrayList<T>();
+	private List<T> content = new ArrayList<>();
 	private int pageNumber;
 	private int pageSize;
 	
-	private List<XmlFriendlyOrder> orders = new ArrayList<XmlFriendlyOrder>();
+	private List<XmlFriendlyOrder> orders = new ArrayList<>();
 	
 	private long total;
 	

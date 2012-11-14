@@ -51,7 +51,7 @@ public class Order {
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ORDER_ID")
-	private Collection<Item> items = new LinkedHashSet<Item>();
+	private Collection<Item> items = new LinkedHashSet<>();
 
 	protected Order() {
 	}

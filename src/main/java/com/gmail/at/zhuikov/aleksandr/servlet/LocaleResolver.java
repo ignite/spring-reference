@@ -24,7 +24,7 @@ public class LocaleResolver extends AbstractLocaleResolver {
 
 	private static final Logger LOG = LoggerFactory.getLogger(LocaleResolver.class);
 
-	private Set<String> supportedLocales = new HashSet<String>();
+	private Set<String> supportedLocales = new HashSet<>();
 
 	{
 		for (Locale l : Locale.getAvailableLocales()) {

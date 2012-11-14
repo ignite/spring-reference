@@ -41,7 +41,7 @@ public class User implements UserDetails {
 	@Column(name = "authority_id", nullable = false)
 	@Enumerated(STRING)
 	private Set<org.springframework.security.core.GrantedAuthority> authorities = 
-			new HashSet<org.springframework.security.core.GrantedAuthority>();
+			new HashSet<>();
 
 	private User() {
 	}

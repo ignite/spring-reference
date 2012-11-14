@@ -17,7 +17,7 @@ public class UniqueProductInOrderValidator implements
 
 	@Override
 	public boolean isValid(Collection<Item> items, ConstraintValidatorContext context) {
-		Set<Item> set = new HashSet<Item>(items);
+		Set<Item> set = new HashSet<>(items);
 		return set.size() == items.size();
 	}
 
