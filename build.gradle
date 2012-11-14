@@ -28,7 +28,7 @@ apply from: 'https://launchpad.net/gradle-release/trunk/latest/+download/apply.g
 apply from: 'https://github.com/valkolovos/gradle_cobertura/raw/master/repo/gradle_cobertura/gradle_cobertura/1.0/coberturainit.gradle'
 apply from: 'https://raw.github.com/gschmidl/jacoco-gradle/master/jacoco.gradle'
 
-sourceCompatibility = '1.6'
+sourceCompatibility = '1.7'
 stopKey = 'gfshrgerthjrwh'
 stopPort = 9451
 httpPort = 8080
