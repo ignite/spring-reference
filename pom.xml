@@ -522,11 +522,6 @@
 		</profile>
 		<profile>
 			<id>rest-test</id>
- 			<activation>
-				<property>
-					<name>!env.JENKINS_URL</name>
-				</property>
-			</activation>
 			<build>
 				<plugins>
 					<plugin>
@@ -551,11 +546,6 @@
 		</profile>
 		<profile>
 			<id>selenium</id>
- 			<activation>
-				<property>
-					<name>!env.JENKINS_URL</name>
-				</property>
-			</activation>
 			<build>
 				<plugins>
 					<plugin>
