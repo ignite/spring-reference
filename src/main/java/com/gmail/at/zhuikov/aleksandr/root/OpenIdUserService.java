@@ -50,14 +50,15 @@ public class OpenIdUserService implements
 
 		for (OpenIDAttribute attribute : attributes) {
 
-			if (attribute.getName().equals("country")) {
+			switch (attribute.getName()) {
+			case "country":
 				country = attribute.getValues().get(0);
 				LOG.info("OpenId provided country [" + country + "]");
-			}
-
-			if (attribute.getName().equals("language")) {
+				break;
+			case "language":
 				language = attribute.getValues().get(0);
 				LOG.info("OpenId provided language [" + language + "]");
+				break;
 			}
 		}
 
