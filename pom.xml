@@ -466,11 +466,11 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-        <repository>
+<!--        <repository>
             <id>jdigidoc-devel</id>
             <name>jDigoDoc Maven development repository</name>
             <url>https://id.smartlink.ee/repo/mvnrepo</url>
-        </repository>
+        </repository>-->
         <repository>
 	        <id>repository-saucelabs.forge.cloudbees.com</id>
 	        <name>Sauce Labs release repository</name>
