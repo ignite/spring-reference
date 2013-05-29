@@ -4,14 +4,13 @@ buildscript {
 	repositories {
 		maven { url 'https://repository-gradle-cloudbees-plugin.forge.cloudbees.com/release' }
 		maven { url 'http://repo.springsource.org/libs-milestone' }
-		maven { url 'http://repo.kulya.info/content/groups/public' }
 		mavenCentral()
 	}
 	dependencies {
 		classpath(
 				'org.gradle:gradle-cloudbees-plugin:1.1.1',
 				'org.gradle.api.plugins:gradle-cf-plugin:0.2.0',
-				'org.veil.gradle.plugins:jmeter-gradle-plugin:1.2-2.6-SNAPSHOT'
+				'com.github.kulya:jmeter-gradle-plugin:1.3.1-2.6'
 				)
 	}
 }
@@ -74,9 +73,9 @@ sourceSets {
 
 repositories {
     mavenCentral()
-    maven { url "https://id.smartlink.ee/repo/mvnrepo" }
 	maven { url "https://repository-saucelabs.forge.cloudbees.com/release" }
 	maven { url 'http://maven.springframework.org/milestone' }
+    flatDir(dirs: 'lib')
 }
 
 artifacts {  archives war }
@@ -117,7 +116,9 @@ dependencies {
         'com.fasterxml.jackson.core:jackson-core:2.0.1',
         'com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.0.1',
         'ee.eesti.id:jdigidoc:2.3.99',
-        'javax.inject:javax.inject:1'
+        'javax.inject:javax.inject:1',
+        'org.bouncycastle:bcprov-jdk15:1.44',
+        'org.bouncycastle:bctsp-jdk15:1.44'
     )
 
     runtime(
