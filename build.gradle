@@ -23,9 +23,8 @@ apply plugin: 'eclipse'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'maven'
 apply plugin: 'jmeter'
+apply plugin: 'jacoco'
 apply from: 'https://launchpad.net/gradle-release/trunk/latest/+download/apply.groovy'
-apply from: 'https://github.com/valkolovos/gradle_cobertura/raw/master/repo/gradle_cobertura/gradle_cobertura/1.0/coberturainit.gradle'
-apply from: 'https://raw.github.com/gschmidl/jacoco-gradle/master/jacoco.gradle'
 
 sourceCompatibility = '1.7'
 stopKey = 'gfshrgerthjrwh'
@@ -193,7 +192,6 @@ task uiTest(type: Test, dependsOn: jettyRunWar) {
 	systemProperties 'DEFAULT_SELENIUM_DRIVER': 'embedded-rc:'
 }
 
-check.dependsOn restTest, uiTest, cobertura
+check.dependsOn restTest, uiTest
 tasks.find { 'cf-push' == it.name }.dependsOn war
 tasks.find { 'cf-update' == it.name }.dependsOn war
-coberturaXml.dependsOn cleanTest //https://github.com/valkolovos/gradle_cobertura/issues/18
