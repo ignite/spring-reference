@@ -75,7 +75,7 @@ repositories {
     mavenCentral()
 	maven { url "https://repository-saucelabs.forge.cloudbees.com/release" }
 	maven { url 'http://maven.springframework.org/milestone' }
-    flatDir(dirs: 'lib')
+	maven { url 'http://repository-reference.forge.cloudbees.com/release' }
 }
 
 artifacts {  archives war }

@@ -280,8 +280,6 @@
             <groupId>ee.eesti.id</groupId>
             <artifactId>jdigidoc</artifactId>
             <version>2.3.99</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/jdigidoc-2.3.99.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.bouncycastle</groupId>
@@ -390,7 +388,7 @@
 					</systemPropertyVariables>
 				</configuration>
 			</plugin>
-			<plugin>
+			<!-- <plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
 				<version>1.7</version>
@@ -409,7 +407,7 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin> -->
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
@@ -483,6 +481,11 @@
 	        <name>Sauce Labs release repository</name>
 	        <url>https://repository-saucelabs.forge.cloudbees.com/release</url>
         </repository>
+		<repository>
+			<id>reference-cloudbees-release-repo</id>
+			<name>CloudBees release repo</name>
+			<url>dav:https://repository-reference.forge.cloudbees.com/release</url>
+		</repository>
 	</repositories>
 	<scm>
 		<connection>scm:git:git@github.com:ignite/spring-reference.git</connection>
