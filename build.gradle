@@ -135,8 +135,8 @@ dependencies {
     testCompile(
         'org.springframework:spring-test:3.2.0.RC1',
         'junit:junit:4.10',
-        'org.seleniumhq.selenium:selenium-java:2.25.0',
-		'org.seleniumhq.selenium:selenium-server:2.25.0',
+        'org.seleniumhq.selenium:selenium-java:2.33.0',
+		'org.seleniumhq.selenium:selenium-server:2.33.0',
         'org.mockito:mockito-core:1.9.0-rc1',
         'com.saucelabs.selenium:selenium-client-factory:2.5',
         'com.saucelabs.selenium:sauce-ondemand-driver:2.5',
