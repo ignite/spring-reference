@@ -91,12 +91,12 @@ configurations {
 
 dependencies {
     compile(
-        'org.springframework:spring-context:3.2.0.RC1',
-        'org.springframework:spring-webmvc:3.2.0.RC1',
-        'org.springframework:spring-orm:3.2.0.RC1',
-        'org.springframework:spring-oxm:3.2.0.RC1',
-        'org.springframework:spring-aop:3.2.0.RC1',
-        'org.springframework:spring-context-support:3.2.0.RC1',
+        'org.springframework:spring-context:3.2.3.RELEASE',
+        'org.springframework:spring-webmvc:3.2.3.RELEASE',
+        'org.springframework:spring-orm:3.2.3.RELEASE',
+        'org.springframework:spring-oxm:3.2.3.RELEASE',
+        'org.springframework:spring-aop:3.2.3.RELEASE',
+        'org.springframework:spring-context-support:3.2.3.RELEASE',
         'org.springframework.security:spring-security-core:3.1.1.RELEASE',
         'org.springframework.security:spring-security-config:3.1.1.RELEASE',
         'org.springframework.security:spring-security-web:3.1.1.RELEASE',
@@ -133,7 +133,7 @@ dependencies {
     )
 
     testCompile(
-        'org.springframework:spring-test:3.2.0.RC1',
+        'org.springframework:spring-test:3.2.3.RELEASE',
         'junit:junit:4.10',
         'org.seleniumhq.selenium:selenium-java:2.33.0',
 		'org.seleniumhq.selenium:selenium-server:2.33.0',
