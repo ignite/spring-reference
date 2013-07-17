@@ -10,7 +10,8 @@ buildscript {
 		classpath(
 				'org.gradle:gradle-cloudbees-plugin:1.1.1',
 				'org.gradle.api.plugins:gradle-cf-plugin:0.2.0',
-				'com.github.kulya:jmeter-gradle-plugin:1.3.1-2.6'
+				'com.github.kulya:jmeter-gradle-plugin:1.3.1-2.6',
+				'org.gradle.api.plugins:gradle-tomcat-plugin:0.9.8'
 				)
 	}
 }
@@ -19,6 +20,7 @@ apply plugin: 'cloudbees'
 apply plugin: 'cloudfoundry'
 apply plugin: 'war'
 apply plugin: 'jetty'
+apply plugin: 'tomcat'
 apply plugin: 'eclipse'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'maven'
@@ -27,8 +29,8 @@ apply plugin: 'jacoco'
 apply from: 'https://launchpad.net/gradle-release/trunk/latest/+download/apply.groovy'
 
 sourceCompatibility = '1.7'
-stopKey = 'gfshrgerthjrwh'
-stopPort = 9451
+[tomcatRunWar, tomcatStop]*.stopPort = 9451
+[tomcatRunWar, tomcatStop]*.stopKey = 'gfshrgerthjrwh'
 httpPort = 8080
 
 jmeterRun.configure {
@@ -86,17 +88,27 @@ configurations {
 	all*.exclude group: 'com.sun.jmx', module: 'jmxri'
 	all*.exclude group: 'commons-logging', module: 'commons-logging'
 	all*.exclude group: 'xerces', module: 'xercesImpl'
+	all*.exclude group: 'org.bouncycastle', module: 'bcprov-jdk15on'
+	all*.exclude group: 'org.bouncycastle', module: 'bcpkix-jdk15on'
 	deployerJars
 }
 
 dependencies {
+
+    def tomcatVersion = '7.0.42'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+           "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
+    tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
+        exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
+    }
+
     compile(
-        'org.springframework:spring-context:3.2.0.RC1',
-        'org.springframework:spring-webmvc:3.2.0.RC1',
-        'org.springframework:spring-orm:3.2.0.RC1',
-        'org.springframework:spring-oxm:3.2.0.RC1',
-        'org.springframework:spring-aop:3.2.0.RC1',
-        'org.springframework:spring-context-support:3.2.0.RC1',
+        'org.springframework:spring-context:3.2.3.RELEASE',
+        'org.springframework:spring-webmvc:3.2.3.RELEASE',
+        'org.springframework:spring-orm:3.2.3.RELEASE',
+        'org.springframework:spring-oxm:3.2.3.RELEASE',
+        'org.springframework:spring-aop:3.2.3.RELEASE',
+        'org.springframework:spring-context-support:3.2.3.RELEASE',
         'org.springframework.security:spring-security-core:3.1.1.RELEASE',
         'org.springframework.security:spring-security-config:3.1.1.RELEASE',
         'org.springframework.security:spring-security-web:3.1.1.RELEASE',
@@ -128,12 +140,12 @@ dependencies {
     )
 
     providedCompile(
-        'javax.servlet:servlet-api:2.5',
+        'javax.servlet:javax.servlet-api:3.1.0',
         'javax.servlet.jsp:jsp-api:2.1',
     )
 
     testCompile(
-        'org.springframework:spring-test:3.2.0.RC1',
+        'org.springframework:spring-test:3.2.3.RELEASE',
         'junit:junit:4.10',
         'org.seleniumhq.selenium:selenium-java:2.33.0',
 		'org.seleniumhq.selenium:selenium-server:2.33.0',
@@ -170,19 +182,26 @@ uploadArchives {
 	}
 }
 
-jettyRunWar {
-	daemon = true
-}
+tomcatRunWar.outputFile = file 'tomcat.log'
 
-task restTest(type: Test, dependsOn: jettyRunWar) {
+task restTest(type: Test, dependsOn: war) {
 	testClassesDir = sourceSets.restTest.output.classesDir
 	classpath = sourceSets.restTest.runtimeClasspath
 	testReportDir = file("build/reports/rest-test")
 	testResultsDir = file("build/rest-test-results")
 	systemProperties 'DEFAULT_SELENIUM_STARTING_URL': 'http://localhost:8080/spring-reference'
+	
+	doFirst {
+        tomcatRunWar.daemon = true
+        tomcatRunWar.execute()
+    }
+    
+	doLast {
+        tomcatStop.execute()
+    }
 }
 
-task uiTest(type: Test, dependsOn: jettyRunWar) {
+task uiTest(type: Test, dependsOn: war) {
 	testClassesDir = sourceSets.uiTest.output.classesDir
 	classpath = sourceSets.uiTest.runtimeClasspath
 	testReportDir = file("build/reports/ui-test")
@@ -190,6 +209,15 @@ task uiTest(type: Test, dependsOn: jettyRunWar) {
 	maxParallelForks 2
 	systemProperties 'DEFAULT_SELENIUM_STARTING_URL': 'http://localhost:8080/spring-reference'
 	systemProperties 'DEFAULT_SELENIUM_DRIVER': 'embedded-rc:'
+	
+	doFirst {
+        tomcatRunWar.daemon = true
+        tomcatRunWar.execute()
+    }
+    
+    doLast {
+        tomcatStop.execute()
+    }
 }
 
 check.dependsOn restTest, uiTest
